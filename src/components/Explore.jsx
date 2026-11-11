@@ -5,7 +5,7 @@ import {
     Polyline,
     CircleMarker,
     useMap,
-} from "react-leaflet";
+} from "react-leaflet"; // React Leaflet components for rendering the map and its elements
 
 import { searchPlace, getNearbyPaths } from "../api/osm";
 
@@ -93,14 +93,14 @@ export default function Explore() {
                     <input
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
-                        placeholder="e.g. Vincennes"
+                        placeholder="e.g. Kuopio"
                         className="rounded-lg border px-3 py-2"
                     />
 
                     <button
                         type="submit"
                         disabled={loading}
-                        className="rounded-lg bg-orange-700 py-2 text-white"
+                        className="rounded-lg bg-orange-700 py-2 text-white hover:bg-orange-800 transition-colors disabled:bg-orange-300"
                     >
                         Search
                     </button>

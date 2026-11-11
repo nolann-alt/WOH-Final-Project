@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import {
+  getActivities,
+  saveActivities,
+} from "../utils/activitiesStorage";
 
 export default function Activities() {
     const [activities, setActivities] = useState([]);
@@ -16,11 +20,9 @@ export default function Activities() {
         async function loadData() {
             try {
                 setLoading(true);
-                const response = await fetch(`${import.meta.env.BASE_URL}activities.json`);
-                if (!response.ok) {
-                    throw new Error("Failed to load activities");
-                }
-                const data = await response.json();
+
+                // Use the getActivities function to fetch activities from localStorage or the JSON file
+                const data = await getActivities();
                 setActivities(data);
             } catch (err) {
                 setError(err.message);
@@ -63,6 +65,24 @@ export default function Activities() {
         }
         return 0;
     });
+
+    // 3. Deleting an activity
+    function deleteActivity(id) {
+        const confirmed = window.confirm(
+            "Are you sure you want to delete this activity?"
+        );
+
+        if (!confirmed) return;
+        
+        // Filter out the activity with the given id
+        const updatedActivities = activities.filter(
+            (activity) => activity.id !== id
+        );
+
+        // Update the state and save to localStorage
+        setActivities(updatedActivities);
+        saveActivities(updatedActivities);
+    }
 
     return (
         <div className="bg-gray-50 min-h-screen p-6 md:p-10 font-sans">
