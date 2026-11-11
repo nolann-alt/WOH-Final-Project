@@ -25,8 +25,7 @@ export default function Dashboard() {
         async function loadData() {
             try {
                 setLoading(true); // setLoading allows us to show a loading state while the data is being fetched
-                const response = await fetch("/activities.json");
-                // Check if the response is ok, if not throw an error
+                const response = await fetch(`${import.meta.env.BASE_URL}activities.json`);                // Check if the response is ok, if not throw an error
                 if (!response.ok) {
                     throw new Error("Failed to load activity data");
                 }

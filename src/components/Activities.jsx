@@ -16,7 +16,7 @@ export default function Activities() {
         async function loadData() {
             try {
                 setLoading(true);
-                const response = await fetch("/activities.json");
+                const response = await fetch(`${import.meta.env.BASE_URL}activities.json`);
                 if (!response.ok) {
                     throw new Error("Failed to load activities");
                 }
