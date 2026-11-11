@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Morning run",
+    "type": "Run",
+    "distance": 5200,
+    "moving_time": 1680,
+    "start_date": "2026-11-08T07:30:00Z"
+  },
+  {
+    "id": 2,
+    "name": "Evening ride",
+    "type": "Ride",
+    "distance": 20400,
+    "moving_time": 3240,
+    "start_date": "2026-11-07T18:00:00Z"
+  },
+  {
+    "id": 3,
+    "name": "Lunchtime trail run",
+    "type": "Run",
+    "distance": 8100,
+    "moving_time": 2700,
+    "start_date": "2026-11-05T12:15:00Z"
+  }
+]
