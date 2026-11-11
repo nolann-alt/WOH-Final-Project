@@ -4,17 +4,6 @@ import { BarChart, Bar, XAxis, ResponsiveContainer } from "recharts";
 import StatTile from "../components/StatTile";
 import { getActivities } from "../utils/activitiesStorage";
 
-// Sample fallback bar chart data matching days Mon-Sun
-const weeklyData = [
-    { day: "Mon", km: 4 },
-    { day: "Tue", km: 8 },
-    { day: "Wed", km: 3 },
-    { day: "Thu", km: 12 },
-    { day: "Fri", km: 5 },
-    { day: "Sat", km: 10 },
-    { day: "Sun", km: 2 },
-];
-
 export default function Dashboard() {
     const [activities, setActivities] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -49,19 +38,111 @@ export default function Dashboard() {
         return <div className="p-8 text-center text-red-500">Error: {error}</div>;
     }
 
-    // Take the 3 most recent activities for the sidebar list
-    const recentActivities = activities.slice(0, 3);
+    // Calculate monthly stats for the dashboard
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+
+    // Filter activities for the current month and year
+    const monthlyActivities = activities.filter((activity) => {
+        const date = new Date(activity.start_date);
+
+        // Check if the activity's month and year match the current month and year
+        return (
+            date.getMonth() === currentMonth &&
+            date.getFullYear() === currentYear
+        );
+    });
+
+    // Filter running activities for the current month
+    const runningActivities = monthlyActivities.filter(
+        (activity) => activity.type === "Run"
+    );
+
+    // Calculate total distance and time for running activities
+    const runningDistance = runningActivities.reduce(
+        (total, activity) => total + activity.distance,
+        0
+    );
+
+    // Calculate total moving time for running activities
+    const runningTime = runningActivities.reduce(
+        (total, activity) => total + activity.moving_time,
+        0
+    );
+
+    // Calculate total distance and time for the current month
+    const monthlyDistance = monthlyActivities.reduce(
+        (total, activity) => total + activity.distance,
+        0
+    );
+
+    // Calculate total moving time for the current month
+    const totalTime = monthlyActivities.reduce(
+        (total, activity) => total + activity.moving_time,
+        0
+    );
+
+    // Convert total distance to kilometers and total time to hours for display
+    const totalDistanceKm = (monthlyDistance / 1000).toFixed(1);
+    const totalHours = (totalTime / 3600).toFixed(1);
+
+    // Calculate average pace only for running activities
+    const averagePace =
+        runningDistance > 0
+            ? runningTime / 60 / (runningDistance / 1000)
+            : 0;
+
+    // Format average pace as minutes and seconds
+    const paceMinutes = Math.floor(averagePace);
+    const paceSeconds = Math.round((averagePace - paceMinutes) * 60);
+
+    const paceText = `${paceMinutes}:${String(paceSeconds).padStart(2, "0")}`;
+
+    // Prepare weekly data for the bar chart (last 7 days)
+    const weeklyData = Array.from({ length: 7 }, (_, index) => {
+        const date = new Date();
+        date.setDate(date.getDate() - (6 - index));
+
+        // Calculate total distance for each day
+        const distance = activities
+            .filter((activity) => {
+                const activityDate = new Date(activity.start_date);
+
+                // Check if the activity's date matches the current date in the loop
+                return activityDate.toDateString() === date.toDateString();
+            })
+            // Sum the distances of all activities for that day
+            // This function takes the total distance and adds the distance of each activity to it
+            .reduce((total, activity) => total + activity.distance, 0);
+
+        // Return an object with the day of the week and distance in kilometers
+        return {
+            day: date.toLocaleDateString("en-US", { weekday: "short" }),
+            km: Number((distance / 1000).toFixed(1)),
+        };
+    });
+
+    // Get the 3 most recent activities for the side panel
+    const recentActivities = [...activities]
+        .sort(
+            (a, b) => new Date(b.start_date) - new Date(a.start_date)
+        )
+        .slice(0, 3); // Sort by date descending and take the first 3
 
     return (
         <div className="bg-gray-50 min-h-screen p-6 md:p-10 font-sans">
             <div className="max-w-6xl mx-auto space-y-8">
                 {/* Top 4 Stat Tiles Grid (the reusable component) */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                    <StatTile title="124" label="km this month" />
-                    <StatTile title="18" label="activities" />
-                    <StatTile title="11h" label="total time" />
-                    <StatTile title="5:23" label="avg pace /km" />
-                </div>  
+                    <StatTile title={totalDistanceKm} label="km this month" />
+                    <StatTile
+                        title={String(monthlyActivities.length)}
+                        label="activities"
+                    />
+                    <StatTile title={`${totalHours}h`} label="total time" />
+                    <StatTile title={paceText} label="avg pace /km" />
+                </div>
 
                 {/* Main Content Grid: Chart (2/3 width) + Recent Activities (1/3 width) */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
