@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-  getActivities,
-  saveActivities,
+    getActivities,
+    saveActivities,
 } from "../utils/activitiesStorage";
 
 export default function Activities() {
@@ -73,7 +73,7 @@ export default function Activities() {
         );
 
         if (!confirmed) return;
-        
+
         // Filter out the activity with the given id
         const updatedActivities = activities.filter(
             (activity) => activity.id !== id
@@ -144,16 +144,23 @@ export default function Activities() {
 
                         return (
                             // Link on each activities throughout all the activities
-                            <Link 
-                                key={act.id} 
-                                to={`/activities/${act.id}`} 
+                            <Link
+                                key={act.id}
+                                to={`/activities/${act.id}`}
                                 className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:border-orange-500 transition-colors block">
                                 <h3 className="font-bold text-gray-900 text-lg">{act.name}</h3>
-                                <p className="text-sm text-gray-500 mt-2"> {act.type} · {distanceKm} km · {durationMin} min </p>
+                                <p className="text-sm text-gray-500 mt-2"> {act.type} · {distanceKm} km · {durationMin} min {paceText}</p>
                             </Link>
                         );
                     })}
                 </div>
+
+                <Link
+                    to="/activities/new"
+                    className="rounded-lg bg-orange-700 px-4 py-2 font-semibold text-white hover:bg-orange-800 transition-colors block text-center"
+                >
+                    Add activity
+                </Link>
 
                 {/* Footer Note */}
                 <p className="text-xs text-gray-400 mt-4">

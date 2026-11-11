@@ -117,6 +117,13 @@ export default function ActivityDetail() {
           Delete
         </button>
 
+        <Link
+          to={`/activities/${activity.id}/edit`}
+          className="rounded-lg bg-orange-700 mt-2 text-white py-2.5 px-2 hover:bg-red-800 transition-colors ml-2"
+        >
+          Edit activity
+        </Link>
+
       </div>
     </div>
   );

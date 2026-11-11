@@ -4,6 +4,7 @@ import Dashboard from './components/Dashboard';
 import Explore from './components/Explore';
 import Navbar from './components/Navbar';
 import ActivityDetail from "./pages/ActivityDetail";
+import ActivityForm from "./components/ActivityForm";
 
 function App() {
 
@@ -17,6 +18,8 @@ function App() {
           <Route path="/activities" element={<Activities />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/activities/:id" element={<ActivityDetail />} />
+          <Route path="/activities/:id/edit" element={<ActivityForm />} />
+          <Route path="/activities/new" element={<ActivityForm />} />
         </Routes>
       </main>
     </div>
