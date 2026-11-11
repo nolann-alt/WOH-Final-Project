@@ -1,5 +1,4 @@
 # SportLog
-
 SportLog is a React web application for tracking running, cycling, and walking activities.
 
 Users can:
@@ -14,7 +13,6 @@ Users can:
 - Search for places and nearby running or cycling paths
 
 ## Technologies
-
 - React
 - Vite
 - React Router
@@ -26,7 +24,6 @@ Users can:
 - Overpass API
 
 ## APIs
-
 The Explore page uses the Nominatim API to search for cities and places.
 
 It uses the Overpass API to find nearby running tracks, cycling paths, parks, and other paths stored in OpenStreetMap.
@@ -34,7 +31,6 @@ It uses the Overpass API to find nearby running tracks, cycling paths, parks, an
 The results are displayed on an interactive map using React Leaflet.
 
 ## Installation
-
 Clone the repository:
 ```bash
 git clone https://github.com/nolann-alt/WOH-Final-Project.git
