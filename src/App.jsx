@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="min-h-screen bg-stone-100 text-stone-900">
       <Navbar/>
-      <main className="max-w-[1100] mx-auto px-6 py-8">
+      <main className="mx-auto px-6 py-8">
          {/* Route for the navbar with HashRouter into the main.jsx component, so the page does not have to refresh */}
         <Routes>
           <Route path="/" element={<Dashboard />} />
