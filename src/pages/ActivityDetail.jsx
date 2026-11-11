@@ -4,6 +4,11 @@ import {
   getActivities,
   saveActivities,
 } from "../utils/activitiesStorage";
+import {
+  MapContainer,
+  TileLayer,
+  Polyline,
+} from "react-leaflet";
 
 export default function ActivityDetail() {
   // 1. Get the activity ID from the URL path (/activities/:id)
@@ -95,7 +100,7 @@ export default function ActivityDetail() {
             {activity.type} · {activity.start_date.slice(0, 10)}
           </p>
         </div>
-    
+
         {/* Stat Box Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
@@ -150,6 +155,32 @@ export default function ActivityDetail() {
             {activity.description || "No description provided."}
           </p>
         </div>
+
+        {/* Map for the activity route */}
+        {activity.route && activity.route.length > 1 && (
+          <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+            <h2 className="mb-4 font-bold text-gray-900">Activity route</h2>
+
+            {/* MapContainer from react-leaflet to display the route */}
+            <MapContainer
+              center={activity.route[0]}
+              zoom={14}
+              className="h-[400px] w-full rounded-lg"
+            >
+              {/* TileLayer to display the map tiles */}
+              <TileLayer
+                url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution="&copy; OpenStreetMap contributors"
+              />
+
+              {/* Draw the activity route as a polyline */}
+              <Polyline
+                positions={activity.route}
+                pathOptions={{ color: "#c2410c", weight: 4 }}
+              />
+            </MapContainer>
+          </div>
+        )}
 
         <button
           type="button"

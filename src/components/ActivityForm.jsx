@@ -1,13 +1,35 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getActivities, saveActivities } from "../utils/activitiesStorage";
+import {
+    MapContainer,
+    TileLayer,
+    Polyline,
+    useMapEvents,
+} from "react-leaflet";
 
+// Component to handle map clicks and update the route state
+function RouteClick({ setRoute }) {
+    useMapEvents({
+        click(event) {
+            setRoute((currentRoute) => [
+                ...currentRoute,
+                [event.latlng.lat, event.latlng.lng],
+            ]);
+        },
+    });
+
+    return null;
+}
 
 // ActivityForm component for adding a new activity
 export default function ActivityForm() {
     const { id } = useParams();
     const navigate = useNavigate(); // Hook to programmatically navigate to another route
     const isEditing = Boolean(id);
+
+    // State to hold the route (array of lat/lng pairs)
+    const [route, setRoute] = useState([]);
 
     // State to hold form data
     const [formData, setFormData] = useState({
@@ -38,14 +60,14 @@ export default function ActivityForm() {
             const activity = activities.find(
                 (item) => String(item.id) === String(id)
             );
-            
+
             // If the activity is not found, alert the user and navigate back to the activities list
             if (!activity) {
                 alert("Activity not found.");
                 navigate("/activities");
                 return;
             }
-            
+
             // Populate the formData state with the existing activity data for editing
             setFormData({
                 name: activity.name || "",
@@ -64,7 +86,10 @@ export default function ActivityForm() {
                 cadence: activity.cadence || "",
                 power: activity.power || "",
             });
+
+            setRoute(activity.route || []); // Set the route state with the existing activity's route if available
         }
+
 
         loadActivity(); // Call the funtion to load the activity data
     }, [id, isEditing, navigate]); // Dependencies ensure the effect runs when the ID or editing state changes
@@ -110,25 +135,25 @@ export default function ActivityForm() {
                 ? Number(formData.cadence)
                 : null,
             power: formData.power ? Number(formData.power) : null,
-            };
-            
-            // If editing, update the existing activity; otherwise, add a new activity
-            let updatedActivities;
-            if (isEditing) {
-                updatedActivities = activities.map((activity) =>
-                    String(activity.id) === String(id)
+            route,
+        };
+
+        // If editing, update the existing activity; otherwise, add a new activity
+        let updatedActivities;
+        if (isEditing) {
+            updatedActivities = activities.map((activity) =>
+                String(activity.id) === String(id)
                     ? { ...activity, ...activityData }
                     : activity
-                );
-            } else {
+            );
+        } else {
             const newActivity = {
                 id: Date.now(),
                 ...activityData,
-                route: [],
             };
             updatedActivities = [...activities, newActivity];
         }
-        
+
 
         // Save the new activity to localStorage and navigate back to the activities page
         saveActivities(updatedActivities);
@@ -295,6 +320,46 @@ export default function ActivityForm() {
                             className="w-full rounded border p-2"
                         />
                     </div>
+                </div>
+
+                {/* Map for creating the route */}
+                <div>
+                    {/* Label for the map */}
+                    <label className="mb-1 block">
+                        Click on the map to create your route
+                    </label>
+
+                    {/* MapContainer from react-leaflet to display the map */}
+                    <MapContainer
+                        center={[48.8566, 2.3522]}
+                        zoom={12}
+                        className="h-[400px] w-full rounded-lg border"
+                    >
+                        {/* TileLayer to display the map tiles */}
+                        <TileLayer
+                            url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            attribution="&copy; OpenStreetMap contributors"
+                        />
+
+                        {/* Component to handle map clicks and update the route */}
+                        <RouteClick setRoute={setRoute} />
+
+                        {/* Draw the route as a polyline if there are at least 2 points */}
+                        {route.length > 1 && (
+                            <Polyline
+                                positions={route}
+                                pathOptions={{ color: "#c2410c", weight: 4 }}
+                            />
+                        )}
+                    </MapContainer>
+
+                    <button
+                        type="button"
+                        onClick={() => setRoute([])}
+                        className="mt-2 text-sm text-red-600 hover:underline"
+                    >
+                        Clear route
+                    </button>
                 </div>
 
                 <button

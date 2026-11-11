@@ -123,8 +123,8 @@ export default function Explore() {
                         <input
                         type="radio"
                         name="sport"
-                        checked={sport === "cycling"}
-                        onChange={() => setSport("cycling")}
+                        checked={sport === "cycle"}
+                        onChange={() => setSport("cycle")}
                         className="accent-orange-700"
                         />
                         Cycling
