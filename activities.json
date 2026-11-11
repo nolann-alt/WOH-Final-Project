@@ -1,26 +1,135 @@
 [
-  {
-    "id": 1,
-    "name": "Morning run",
-    "type": "Run",
-    "distance": 5200,
-    "moving_time": 1680,
-    "start_date": "2026-11-08T07:30:00Z"
-  },
-  {
-    "id": 2,
-    "name": "Evening ride",
-    "type": "Ride",
-    "distance": 20400,
-    "moving_time": 3240,
-    "start_date": "2026-11-07T18:00:00Z"
-  },
-  {
-    "id": 3,
-    "name": "Lunchtime trail run",
-    "type": "Run",
-    "distance": 8100,
-    "moving_time": 2700,
-    "start_date": "2026-11-05T12:15:00Z"
-  }
+    {
+        "id": 1,
+        "name": "Morning run",
+        "type": "Run",
+        "distance": 5200,
+        "moving_time": 1680,
+        "start_date": "2026-11-11T07:30:00Z",
+        "description": "Easy morning run around the park.",
+        "location": "Paris",
+        "calories": 430,
+        "heart_rate": 145,
+        "cadence": 168,
+        "power": null,
+        "route": [
+            [
+                48.8566,
+                2.3522
+            ],
+            [
+                48.8584,
+                2.3478
+            ],
+            [
+                48.8606,
+                2.3509
+            ]
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Evening ride",
+        "type": "Ride",
+        "distance": 20400,
+        "moving_time": 3240,
+        "start_date": "2026-11-10T18:00:00Z",
+        "description": "Relaxed cycling ride through the city.",
+        "location": "Paris",
+        "calories": 720,
+        "heart_rate": 138,
+        "cadence": 82,
+        "power": 185,
+        "route": []
+    },
+    {
+        "id": 3,
+        "name": "Lunchtime trail run",
+        "type": "Run",
+        "distance": 8100,
+        "moving_time": 2700,
+        "start_date": "2026-11-09T12:15:00Z",
+        "description": "Trail run with a few uphill sections.",
+        "location": "Vincennes",
+        "calories": 680,
+        "heart_rate": 152,
+        "cadence": 165,
+        "power": null,
+        "route": []
+    },
+    {
+        "id": 4,
+        "name": "Short recovery run",
+        "type": "Run",
+        "distance": 3500,
+        "moving_time": 1320,
+        "start_date": "2026-11-08T09:00:00Z",
+        "description": "Slow recovery run after a busy week.",
+        "location": "Paris",
+        "calories": 280,
+        "heart_rate": 132,
+        "cadence": 162,
+        "power": null,
+        "route": []
+    },
+    {
+        "id": 5,
+        "name": "Long weekend ride",
+        "type": "Ride",
+        "distance": 35600,
+        "moving_time": 6120,
+        "start_date": "2026-11-07T08:30:00Z",
+        "description": "Long ride outside the city.",
+        "location": "Boulogne-Billancourt",
+        "calories": 1150,
+        "heart_rate": 142,
+        "cadence": 85,
+        "power": 201,
+        "route": []
+    },
+    {
+        "id": 6,
+        "name": "Tempo run",
+        "type": "Run",
+        "distance": 6700,
+        "moving_time": 1980,
+        "start_date": "2026-11-05T17:45:00Z",
+        "description": "Tempo training with three faster sections.",
+        "location": "Paris",
+        "calories": 590,
+        "heart_rate": 158,
+        "cadence": 174,
+        "power": null,
+        "route": []
+    },
+    {
+        "id": 7,
+        "name": "Park walk",
+        "type": "Walk",
+        "distance": 4200,
+        "moving_time": 3300,
+        "start_date": "2026-11-03T14:00:00Z",
+        "description": "Easy walk in the park.",
+        "location": "Vincennes",
+        "calories": 220,
+        "heart_rate": 105,
+        "cadence": 112,
+        "power": null,
+        "route": []
+    },
+    {
+        "id": 8,
+        "name": "Hill cycling session",
+        "type": "Ride",
+        "distance": 18200,
+        "moving_time": 3000,
+        "start_date": "2026-11-01T10:00:00Z",
+        "description": "Cycling session with several hill climbs.",
+        "location": "Montreuil",
+        "calories": 760,
+        "heart_rate": 149,
+        "cadence": 78,
+        "power": 220,
+        "route": []
+    }
 ]
