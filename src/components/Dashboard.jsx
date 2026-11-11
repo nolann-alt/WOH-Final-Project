@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BarChart, Bar, XAxis, ResponsiveContainer } from "recharts";
 import StatTile from "../components/StatTile";
+import { getActivities } from "../utils/activitiesStorage";
 
 // Sample fallback bar chart data matching days Mon-Sun
 const weeklyData = [
@@ -25,11 +26,7 @@ export default function Dashboard() {
         async function loadData() {
             try {
                 setLoading(true); // setLoading allows us to show a loading state while the data is being fetched
-                const response = await fetch(`${import.meta.env.BASE_URL}activities.json`);                // Check if the response is ok, if not throw an error
-                if (!response.ok) {
-                    throw new Error("Failed to load activity data");
-                }
-                const data = await response.json();
+                const data = await getActivities();
                 setActivities(data); // Set the activities state with the fetched data
             } catch (err) {
                 setError(err.message);

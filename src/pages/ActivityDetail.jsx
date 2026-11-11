@@ -95,7 +95,7 @@ export default function ActivityDetail() {
             {activity.type} · {activity.start_date.slice(0, 10)}
           </p>
         </div>
-
+    
         {/* Stat Box Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
@@ -107,6 +107,48 @@ export default function ActivityDetail() {
             <h3 className="text-3xl font-bold text-gray-900">{durationMin} min</h3>
             <p className="text-sm text-gray-500 mt-1">Moving time</p>
           </div>
+        </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+          <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+            <p className="text-sm text-gray-500">Location</p>
+            <p className="mt-1 font-semibold text-gray-900">
+              {activity.location || "Not provided"}
+            </p>
+          </div>
+
+          <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+            <p className="text-sm text-gray-500">Calories</p>
+            <p className="mt-1 font-semibold text-gray-900">
+              {activity.calories ?? "Not provided"}
+            </p>
+          </div>
+
+          <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+            <p className="text-sm text-gray-500">Heart rate</p>
+            <p className="mt-1 font-semibold text-gray-900">
+              {activity.heart_rate ? `${activity.heart_rate} bpm` : "Not provided"}
+            </p>
+          </div>
+
+          <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+            <p className="text-sm text-gray-500">Cadence</p>
+            <p className="mt-1 font-semibold text-gray-900">
+              {activity.cadence ?? "Not provided"}
+            </p>
+          </div>
+
+          <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+            <p className="text-sm text-gray-500">Power</p>
+            <p className="mt-1 font-semibold text-gray-900">
+              {activity.power ? `${activity.power} W` : "Not provided"}
+            </p>
+          </div>
+        </div>
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h2 className="font-bold text-gray-900">Description</h2>
+          <p className="mt-2 text-gray-600">
+            {activity.description || "No description provided."}
+          </p>
         </div>
 
         <button
