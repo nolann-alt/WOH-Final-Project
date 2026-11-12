@@ -14,7 +14,7 @@ const Navbar = () => {
 
   return (
         <header className="bg-white border-b border-stone-200">
-            <div className="max-w-[1100] mx-auto px-6">
+            <div className="mx-auto px-6">
                 <div className="flex h-16 items-center justify-between">
                 {/* Logo of the application*/}
                 <span className="text-xl font-extrabold text-orange-700">SportLog</span>
